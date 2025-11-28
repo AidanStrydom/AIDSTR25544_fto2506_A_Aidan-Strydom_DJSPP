@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FavoritesContext } from "../../context/FavoritesContext";
 import { AudioContext } from "../../context/AudioContext";
+import { PodcastContext } from "../../context/PodcastContext";
 import { formatDate } from "../../utils/formatDate";
 import styles from "./FavoriteEpisodeCard.module.css";
 
@@ -18,10 +19,15 @@ import styles from "./FavoriteEpisodeCard.module.css";
 export default function FavoriteEpisodeCard({ favorite }) {
   const { removeFavorite } = useContext(FavoritesContext);
   const { playEpisode, currentEpisode } = useContext(AudioContext);
+  const { allPodcasts } = useContext(PodcastContext);
   const navigate = useNavigate();
 
   const handleNavigateToPodcast = () => {
-    navigate(`/show/${favorite.podcastId}`);
+    // Find the podcast to get its genres
+    const podcast = allPodcasts.find(p => p.id === favorite.podcastId);
+    const genres = podcast ? podcast.genres : [];
+    
+    navigate(`/show/${favorite.podcastId}`, { state: { genres } });
   };
 
   const handleRemove = (e) => {
