@@ -1,6 +1,14 @@
 .select {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 0.75rem;
   font-size: 1rem;
+  background: var(--select-bg);
+  color: var(--text-primary);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #667eea;
 }

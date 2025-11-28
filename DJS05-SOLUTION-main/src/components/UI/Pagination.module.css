@@ -1,19 +1,33 @@
 .paginationWrapper {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 1rem 0;
+  padding: 2rem 1rem;
+  flex-wrap: wrap;
 }
+
 .pageButton {
-  padding: 0.5rem 0.75rem;
-  border-radius: 999px;
-  background-color: #eee;
-  font-size: 1rem;
-  border: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  font-size: 1rem;
 }
-.active {
-  background-color: #2563eb;
+
+.pageButton:hover {
+  background: var(--border-light);
+  transform: translateY(-2px);
+}
+
+.pageButton.active {
+  background: #667eea;
   color: white;
+  border-color: #667eea;
+}
+
+.pageButton.active:hover {
+  background: #5568d3;
 }

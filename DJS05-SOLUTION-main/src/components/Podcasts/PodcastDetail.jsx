@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ← add this
+import { useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { FavoritesContext } from "../../context/FavoritesContext";
 import styles from "./PodcastDetail.module.css";
 import { formatDate } from "../../utils/formatDate";
 import GenreTags from "../UI/GenreTags";
@@ -7,7 +8,23 @@ import GenreTags from "../UI/GenreTags";
 export default function PodcastDetail({ podcast, genres }) {
   const [selectedSeasonIndex, setSelectedSeasonIndex] = useState(0);
   const season = podcast.seasons[selectedSeasonIndex];
-  const navigate = useNavigate(); // ← hook for navigation
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { isFavorited, toggleFavorite } = useContext(FavoritesContext);
+
+  const handleToggleFavorite = (episode, episodeIndex) => {
+    const episodeData = {
+      podcastId: id,
+      podcastTitle: podcast.title,
+      seasonNumber: selectedSeasonIndex + 1,
+      seasonTitle: season.title,
+      seasonImage: season.image,
+      episodeNumber: episodeIndex + 1,
+      episodeTitle: episode.title,
+      episodeDescription: episode.description,
+    };
+    toggleFavorite(episodeData);
+  };
 
   return (
     <div className={styles.container}>
@@ -59,7 +76,7 @@ export default function PodcastDetail({ podcast, genres }) {
       <div className={styles.seasonDetails}>
         <div className={styles.seasonIntro}>
           <div className={styles.left}>
-            <img className={styles.seasonCover} src={season.image} />
+            <img className={styles.seasonCover} src={season.image} alt={season.title} />
             <div>
               <h3>
                 Season {selectedSeasonIndex + 1}: {season.title}
@@ -84,17 +101,29 @@ export default function PodcastDetail({ podcast, genres }) {
         </div>
 
         <div className={styles.episodeList}>
-          {season.episodes.map((ep, index) => (
-            <div key={index} className={styles.episodeCard}>
-              <img className={styles.episodeCover} src={season.image} alt="" />
-              <div className={styles.episodeInfo}>
-                <p className={styles.episodeTitle}>
-                  Episode {index + 1}: {ep.title}
-                </p>
-                <p className={styles.episodeDesc}>{ep.description}</p>
+          {season.episodes.map((ep, index) => {
+            const isFav = isFavorited(id, selectedSeasonIndex + 1, index + 1);
+            return (
+              <div key={index} className={styles.episodeCard}>
+                <img className={styles.episodeCover} src={season.image} alt="" />
+                <div className={styles.episodeInfo}>
+                  <div className={styles.episodeHeader}>
+                    <p className={styles.episodeTitle}>
+                      Episode {index + 1}: {ep.title}
+                    </p>
+                    <button
+                      className={`${styles.favoriteButton} ${isFav ? styles.favorited : ''}`}
+                      onClick={() => handleToggleFavorite(ep, index)}
+                      aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
+                    >
+                      {isFav ? '❤️' : '🤍'}
+                    </button>
+                  </div>
+                  <p className={styles.episodeDesc}>{ep.description}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

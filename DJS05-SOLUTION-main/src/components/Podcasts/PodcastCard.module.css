@@ -1,14 +1,16 @@
 .card {
-  background: white;
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px var(--shadow);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .card:hover {
   transform: scale(1.02);
+  box-shadow: 0 4px 12px var(--shadow-hover);
+  background: var(--card-hover-bg);
 }
 
 .card img {
@@ -18,12 +20,13 @@
 
 .card h3 {
   margin: 0.5rem 0;
+  color: var(--text-primary);
 }
 
 .card p {
   margin: 0px;
   font-size: 0.8rem;
-  color: var(--grey-text);
+  color: var(--text-secondary);
 }
 
 .tags {
@@ -31,16 +34,17 @@
 }
 
 .tag {
-  background: #eee;
+  background: var(--border-light);
   padding: 0.3rem 0.6rem;
   margin-right: 0.5rem;
   margin-top: 0.5rem;
   border-radius: 4px;
   display: inline-block;
   font-size: 0.8rem;
+  color: var(--text-secondary);
 }
 
 .updatedText {
   font-size: 0.8rem;
-  color: var(--grey-text);
+  color: var(--text-tertiary);
 }

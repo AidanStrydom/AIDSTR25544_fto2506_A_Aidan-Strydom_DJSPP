@@ -1,17 +1,22 @@
 .messageContainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  justify-content: center;
+  padding: 3rem;
 }
 
 .error {
-  padding: 1rem 1.5rem;
-  border: 1px solid #f44336;
-  background-color: #ffe5e5;
-  color: #d32f2f;
-  border-radius: 5px;
-  font-weight: bold;
-  max-width: 400px;
-  margin-top: 10%;
+  background: #fee;
+  color: #c00;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #fcc;
+  max-width: 600px;
+  text-align: center;
+}
+
+body.dark .error {
+  background: #4a1a1a;
+  color: #ff6b6b;
+  border-color: #6a2020;
 }
