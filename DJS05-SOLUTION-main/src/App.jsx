@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/UI/Header";
 import Home from "./pages/Home";
 import ShowDetail from "./pages/ShowDetail";
+import Favorites from "./pages/Favorites";
 import { PodcastProvider } from "./context/PodcastContext";
 
 /**
@@ -12,6 +13,7 @@ import { PodcastProvider } from "./context/PodcastContext";
  * - Defines client-side routes using React Router:
  *    - "/" renders the `Home` page
  *    - "/show/:id" renders the `ShowDetail` page for a specific podcast
+ *    - "/favorites" renders the `Favorites` page with favorited episodes
  *
  * @returns {JSX.Element} The application component with routing and context.
  */
@@ -23,6 +25,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path={`/show/:id`} element={<ShowDetail />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </PodcastProvider>
     </>
