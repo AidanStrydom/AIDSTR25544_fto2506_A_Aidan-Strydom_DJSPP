@@ -10,7 +10,7 @@ import styles from "./RecommendedShows.module.css";
  * Displays recommended podcasts based on:
  * - Genres from favorited episodes (if user has favorites)
  * - Podcasts with most genres (if user has no favorites)
- * Includes pagination for smaller screens.
+ * Includes pagination to prevent wrapping.
  * 
  * @returns {JSX.Element} A section showing recommended podcasts
  */
@@ -18,7 +18,7 @@ export default function RecommendedShows() {
   const { allPodcasts } = useContext(PodcastContext);
   const { favorites } = useContext(FavoritesContext);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [itemsPerRow, setItemsPerRow] = useState(4);
 
   const recommendations = useMemo(() => {
     if (!allPodcasts || allPodcasts.length === 0) return [];
@@ -51,37 +51,36 @@ export default function RecommendedShows() {
         .filter(item => item.score > 0)
         .sort((a, b) => b.score - a.score);
 
-      return scoredPodcasts.slice(0, 10).map(item => item.podcast);
+      return scoredPodcasts.slice(0, 20).map(item => item.podcast);
     }
 
     // If no favorites, show podcasts with most genres
     const sortedByGenreCount = [...allPodcasts]
       .sort((a, b) => b.genres.length - a.genres.length)
-      .slice(0, 10);
+      .slice(0, 20);
 
     return sortedByGenreCount;
   }, [allPodcasts, favorites]);
 
   /**
-   * Dynamically calculate the number of items per page based on screen width.
+   * Calculate items per row based on screen width.
    */
   useEffect(() => {
-    const calculatePageSize = () => {
+    const calculateItemsPerRow = () => {
       const screenW = window.innerWidth;
-      if (screenW <= 1024) {
-        setPageSize(10);
-        return;
-      }
       const cardWidth = 260;
-      const maxRows = 2;
-      const columns = Math.floor(screenW / cardWidth);
-      const calculatedPageSize = columns * maxRows;
-      setPageSize(calculatedPageSize);
+      const gap = 16; // 1rem gap
+      const padding = 32; // 2rem total padding (1rem each side)
+      
+      const availableWidth = screenW - padding;
+      const columns = Math.max(1, Math.floor((availableWidth + gap) / (cardWidth + gap)));
+      
+      setItemsPerRow(columns);
     };
 
-    calculatePageSize();
-    window.addEventListener("resize", calculatePageSize);
-    return () => window.removeEventListener("resize", calculatePageSize);
+    calculateItemsPerRow();
+    window.addEventListener("resize", calculateItemsPerRow);
+    return () => window.removeEventListener("resize", calculateItemsPerRow);
   }, []);
 
   // Reset to page 1 when recommendations change
@@ -91,11 +90,13 @@ export default function RecommendedShows() {
 
   if (recommendations.length === 0) return null;
 
-  const totalPages = Math.max(1, Math.ceil(recommendations.length / pageSize));
+  // Calculate items per page (2 rows)
+  const itemsPerPage = itemsPerRow * 2;
+  const totalPages = Math.max(1, Math.ceil(recommendations.length / itemsPerPage));
   const currentPage = Math.min(page, totalPages);
   const paged = recommendations.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const title = favorites.length > 0 
@@ -112,7 +113,7 @@ export default function RecommendedShows() {
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
-      <div className={styles.grid}>
+      <div className={styles.grid} style={{ gridTemplateColumns: `repeat(${itemsPerRow}, 1fr)` }}>
         {paged.map(podcast => (
           <PodcastCard key={podcast.id} podcast={podcast} />
         ))}
