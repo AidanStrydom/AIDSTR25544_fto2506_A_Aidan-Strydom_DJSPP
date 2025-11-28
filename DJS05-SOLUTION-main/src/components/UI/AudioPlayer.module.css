@@ -14,7 +14,7 @@
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr auto 2fr;
+  grid-template-columns: 1fr auto 2fr auto;
   gap: 2rem;
   align-items: center;
 }
@@ -79,12 +79,12 @@
 }
 
 .controlButton:hover {
-  color: #667eea;
+  color: var(--accent-primary);
   transform: scale(1.1);
 }
 
 .playPauseButton {
-  background: #667eea;
+  background: var(--accent-primary);
   border: none;
   color: white;
   font-size: 1.5rem;
@@ -100,7 +100,7 @@
 }
 
 .playPauseButton:hover {
-  background: #5568d3;
+  background: var(--accent-hover);
   transform: scale(1.05);
 }
 
@@ -159,9 +159,28 @@
 
 .progressFill {
   height: 100%;
-  background: #667eea;
+  background: var(--accent-primary);
   border-radius: 4px;
   transition: width 0.1s linear;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: var(--accent-primary);
+  transform: scale(1.1);
 }
 
 /* Mobile Responsive */
@@ -181,6 +200,11 @@
 
   .progressSection {
     order: 3;
+  }
+
+  .closeButton {
+    order: 4;
+    align-self: center;
   }
 
   .episodeImage {
@@ -218,6 +242,6 @@ body {
 
 @media (max-width: 768px) {
   body {
-    padding-bottom: 180px;
+    padding-bottom: 200px;
   }
 }

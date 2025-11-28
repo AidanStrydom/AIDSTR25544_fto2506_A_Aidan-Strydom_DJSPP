@@ -17,6 +17,9 @@ body.light {
   --card-hover-bg: #ffffff;
   --input-bg: #ffffff;
   --select-bg: #ffffff;
+  --accent-primary: #ff6b35;
+  --accent-hover: #ff8c61;
+  --accent-active: #e55a2b;
 }
 
 /* Dark mode variables */
@@ -34,6 +37,9 @@ body.dark {
   --card-hover-bg: #353535;
   --input-bg: #2d2d2d;
   --select-bg: #2d2d2d;
+  --accent-primary: #c41e3a;
+  --accent-hover: #a01629;
+  --accent-active: #8b0000;
 }
 
 body {

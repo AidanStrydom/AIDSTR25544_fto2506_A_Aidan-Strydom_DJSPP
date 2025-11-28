@@ -7,7 +7,7 @@ import styles from "./AudioPlayer.module.css";
  * AudioPlayer Component
  * 
  * Displays a fixed audio player bar at the bottom of the screen.
- * Shows currently playing episode, progress bar, playback controls, and favorite button.
+ * Shows currently playing episode, progress bar, playback controls, favorite button, and close button.
  * 
  * @returns {JSX.Element|null} Audio player bar or null if no episode is playing
  */
@@ -21,6 +21,7 @@ export default function AudioPlayer() {
     skipForward,
     skipBackward,
     seekTo,
+    closePlayer,
   } = useContext(AudioContext);
 
   const { isFavorited, toggleFavorite } = useContext(FavoritesContext);
@@ -133,6 +134,15 @@ export default function AudioPlayer() {
           </div>
           <span className={styles.time}>{formatTime(duration)}</span>
         </div>
+
+        {/* Close Button */}
+        <button
+          className={styles.closeButton}
+          onClick={closePlayer}
+          aria-label="Close player"
+        >
+          ✕
+        </button>
       </div>
     </div>
   );

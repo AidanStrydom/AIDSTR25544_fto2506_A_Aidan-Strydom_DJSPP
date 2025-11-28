@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState, useEffect } from "react";
 import { PodcastContext } from "../../context/PodcastContext";
 import { FavoritesContext } from "../../context/FavoritesContext";
 import PodcastCard from "../Podcasts/PodcastCard";
@@ -10,12 +10,15 @@ import styles from "./RecommendedShows.module.css";
  * Displays recommended podcasts based on:
  * - Genres from favorited episodes (if user has favorites)
  * - Podcasts with most genres (if user has no favorites)
+ * Includes pagination for smaller screens.
  * 
  * @returns {JSX.Element} A section showing recommended podcasts
  */
 export default function RecommendedShows() {
   const { allPodcasts } = useContext(PodcastContext);
   const { favorites } = useContext(FavoritesContext);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const recommendations = useMemo(() => {
     if (!allPodcasts || allPodcasts.length === 0) return [];
@@ -59,7 +62,41 @@ export default function RecommendedShows() {
     return sortedByGenreCount;
   }, [allPodcasts, favorites]);
 
+  /**
+   * Dynamically calculate the number of items per page based on screen width.
+   */
+  useEffect(() => {
+    const calculatePageSize = () => {
+      const screenW = window.innerWidth;
+      if (screenW <= 1024) {
+        setPageSize(10);
+        return;
+      }
+      const cardWidth = 260;
+      const maxRows = 2;
+      const columns = Math.floor(screenW / cardWidth);
+      const calculatedPageSize = columns * maxRows;
+      setPageSize(calculatedPageSize);
+    };
+
+    calculatePageSize();
+    window.addEventListener("resize", calculatePageSize);
+    return () => window.removeEventListener("resize", calculatePageSize);
+  }, []);
+
+  // Reset to page 1 when recommendations change
+  useEffect(() => {
+    setPage(1);
+  }, [recommendations]);
+
   if (recommendations.length === 0) return null;
+
+  const totalPages = Math.max(1, Math.ceil(recommendations.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const paged = recommendations.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const title = favorites.length > 0 
     ? "Recommended For You" 
@@ -76,10 +113,24 @@ export default function RecommendedShows() {
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
       <div className={styles.grid}>
-        {recommendations.map(podcast => (
+        {paged.map(podcast => (
           <PodcastCard key={podcast.id} podcast={podcast} />
         ))}
       </div>
+      
+      {totalPages > 1 && (
+        <div className={styles.paginationWrapper}>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+            <button
+              key={p}
+              className={`${styles.pageButton} ${p === currentPage ? styles.active : ""}`}
+              onClick={() => setPage(p)}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

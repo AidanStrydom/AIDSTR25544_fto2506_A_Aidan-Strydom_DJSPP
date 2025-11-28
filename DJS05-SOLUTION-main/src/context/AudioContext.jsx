@@ -85,6 +85,18 @@ export function AudioProvider({ children }) {
     setCurrentTime(time);
   };
 
+  /**
+   * Close the player and stop playback.
+   */
+  const closePlayer = () => {
+    audioRef.current.pause();
+    audioRef.current.src = "";
+    setCurrentEpisode(null);
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setDuration(0);
+  };
+
   // Update current time as audio plays
   useEffect(() => {
     const audio = audioRef.current;
@@ -114,6 +126,7 @@ export function AudioProvider({ children }) {
     skipForward,
     skipBackward,
     seekTo,
+    closePlayer,
   };
 
   return (

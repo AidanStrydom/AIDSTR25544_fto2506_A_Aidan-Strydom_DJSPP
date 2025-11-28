@@ -33,7 +33,7 @@ strong {
 }
 
 .backButton:hover {
-  color: #667eea;
+  color: var(--accent-primary);
 }
 
 .cover {
@@ -206,7 +206,7 @@ strong {
 }
 
 .playButton {
-  background: #667eea;
+  background: var(--accent-primary);
   border: none;
   color: white;
   font-size: 1.2rem;
@@ -221,7 +221,7 @@ strong {
 }
 
 .playButton:hover {
-  background: #5568d3;
+  background: var(--accent-hover);
   transform: scale(1.05);
 }
 

@@ -22,7 +22,7 @@
 }
 
 .homeButton:hover {
-  color: #667eea;
+  color: var(--accent-primary);
 }
 
 .header {

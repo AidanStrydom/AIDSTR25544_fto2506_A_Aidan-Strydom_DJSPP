@@ -23,11 +23,11 @@
 }
 
 .pageButton.active {
-  background: #667eea;
+  background: var(--accent-primary);
   color: white;
-  border-color: #667eea;
+  border-color: var(--accent-primary);
 }
 
 .pageButton.active:hover {
-  background: #5568d3;
+  background: var(--accent-hover);
 }

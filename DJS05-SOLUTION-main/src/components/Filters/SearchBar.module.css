@@ -12,7 +12,7 @@
 
 .searchInput:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--accent-primary);
 }
 
 @media (min-width: 768px) {
