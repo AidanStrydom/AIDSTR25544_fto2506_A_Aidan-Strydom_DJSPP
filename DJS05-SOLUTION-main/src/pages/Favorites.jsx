@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { FavoritesContext } from "../context/FavoritesContext";
 import FavoriteEpisodeCard from "../components/Podcasts/FavoriteEpisodeCard";
 import styles from "./Favorites.module.css";
@@ -13,14 +14,20 @@ import styles from "./Favorites.module.css";
  */
 export default function Favorites() {
   const { favorites } = useContext(FavoritesContext);
+  const navigate = useNavigate();
 
   return (
     <main className={styles.main}>
-      <div className={styles.header}>
-        <h1>My Favorite Episodes</h1>
-        <p className={styles.count}>
-          {favorites.length} {favorites.length === 1 ? 'episode' : 'episodes'}
-        </p>
+      <div className={styles.headerContainer}>
+        <button className={styles.homeButton} onClick={() => navigate("/")}>
+          ← Home
+        </button>
+        <div className={styles.header}>
+          <h1>My Favorite Episodes</h1>
+          <p className={styles.count}>
+            {favorites.length} {favorites.length === 1 ? 'episode' : 'episodes'}
+          </p>
+        </div>
       </div>
 
       {favorites.length === 0 ? (

@@ -4,8 +4,29 @@
   padding: 2rem;
 }
 
-.header {
+.headerContainer {
   margin-bottom: 2rem;
+}
+
+.homeButton {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  font-weight: bold;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.homeButton:hover {
+  color: #667eea;
+}
+
+.header {
+  margin-bottom: 0;
 }
 
 .header h1 {
