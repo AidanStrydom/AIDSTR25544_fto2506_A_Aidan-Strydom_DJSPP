@@ -3,6 +3,7 @@ import Header from "./components/UI/Header";
 import Home from "./pages/Home";
 import ShowDetail from "./pages/ShowDetail";
 import Favorites from "./pages/Favorites";
+import AudioPlayer from "./components/UI/AudioPlayer";
 import { PodcastProvider } from "./context/PodcastContext";
 
 /**
@@ -10,6 +11,7 @@ import { PodcastProvider } from "./context/PodcastContext";
  *
  * - Wraps the application in the `PodcastProvider` context for global state.
  * - Includes the `Header` component, displayed on all pages.
+ * - Includes the `AudioPlayer` component, fixed at the bottom.
  * - Defines client-side routes using React Router:
  *    - "/" renders the `Home` page
  *    - "/show/:id" renders the `ShowDetail` page for a specific podcast
@@ -28,6 +30,7 @@ export default function App() {
           <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </PodcastProvider>
+      <AudioPlayer />
     </>
   );
 }

@@ -5,3 +5,4 @@ export { default as GenreTags } from "./GenreTags";
 export { default as Header } from "./Header";
 export { default as ThemeToggle } from "./ThemeToggle";
 export { default as RecommendedShows } from "./RecommendedShows";
+export { default as AudioPlayer } from "./AudioPlayer";

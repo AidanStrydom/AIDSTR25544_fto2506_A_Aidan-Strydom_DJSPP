@@ -5,13 +5,16 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AudioProvider } from "./context/AudioContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <FavoritesProvider>
-          <App />
+          <AudioProvider>
+            <App />
+          </AudioProvider>
         </FavoritesProvider>
       </ThemeProvider>
     </BrowserRouter>

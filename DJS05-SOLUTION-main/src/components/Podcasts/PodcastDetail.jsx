@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FavoritesContext } from "../../context/FavoritesContext";
+import { AudioContext } from "../../context/AudioContext";
 import styles from "./PodcastDetail.module.css";
 import { formatDate } from "../../utils/formatDate";
 import GenreTags from "../UI/GenreTags";
@@ -11,6 +12,7 @@ export default function PodcastDetail({ podcast, genres }) {
   const navigate = useNavigate();
   const { id } = useParams();
   const { isFavorited, toggleFavorite } = useContext(FavoritesContext);
+  const { playEpisode, currentEpisode } = useContext(AudioContext);
 
   const handleToggleFavorite = (episode, episodeIndex) => {
     const episodeData = {
@@ -24,6 +26,21 @@ export default function PodcastDetail({ podcast, genres }) {
       episodeDescription: episode.description,
     };
     toggleFavorite(episodeData);
+  };
+
+  const handlePlayEpisode = (episode, episodeIndex) => {
+    const episodeData = {
+      podcastId: id,
+      podcastTitle: podcast.title,
+      seasonNumber: selectedSeasonIndex + 1,
+      seasonTitle: season.title,
+      seasonImage: season.image,
+      episodeNumber: episodeIndex + 1,
+      episodeTitle: episode.title,
+      episodeDescription: episode.description,
+      audioFile: episode.file,
+    };
+    playEpisode(episodeData);
   };
 
   return (
@@ -103,6 +120,11 @@ export default function PodcastDetail({ podcast, genres }) {
         <div className={styles.episodeList}>
           {season.episodes.map((ep, index) => {
             const isFav = isFavorited(id, selectedSeasonIndex + 1, index + 1);
+            const isCurrentlyPlaying = 
+              currentEpisode?.podcastId === id &&
+              currentEpisode?.seasonNumber === selectedSeasonIndex + 1 &&
+              currentEpisode?.episodeNumber === index + 1;
+            
             return (
               <div key={index} className={styles.episodeCard}>
                 <img className={styles.episodeCover} src={season.image} alt="" />
@@ -111,13 +133,22 @@ export default function PodcastDetail({ podcast, genres }) {
                     <p className={styles.episodeTitle}>
                       Episode {index + 1}: {ep.title}
                     </p>
-                    <button
-                      className={`${styles.favoriteButton} ${isFav ? styles.favorited : ''}`}
-                      onClick={() => handleToggleFavorite(ep, index)}
-                      aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
-                    >
-                      {isFav ? '❤️' : '🤍'}
-                    </button>
+                    <div className={styles.episodeActions}>
+                      <button
+                        className={`${styles.playButton} ${isCurrentlyPlaying ? styles.playing : ''}`}
+                        onClick={() => handlePlayEpisode(ep, index)}
+                        aria-label="Play episode"
+                      >
+                        {isCurrentlyPlaying ? '⏸' : '▶'}
+                      </button>
+                      <button
+                        className={`${styles.favoriteButton} ${isFav ? styles.favorited : ''}`}
+                        onClick={() => handleToggleFavorite(ep, index)}
+                        aria-label={isFav ? "Remove from favorites" : "Add to favorites"}
+                      >
+                        {isFav ? '❤️' : '🤍'}
+                      </button>
+                    </div>
                   </div>
                   <p className={styles.episodeDesc}>{ep.description}</p>
                 </div>

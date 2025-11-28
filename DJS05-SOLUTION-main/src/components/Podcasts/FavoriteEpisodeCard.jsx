@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FavoritesContext } from "../../context/FavoritesContext";
+import { AudioContext } from "../../context/AudioContext";
 import { formatDate } from "../../utils/formatDate";
 import styles from "./FavoriteEpisodeCard.module.css";
 
@@ -8,6 +9,7 @@ import styles from "./FavoriteEpisodeCard.module.css";
  * FavoriteEpisodeCard Component
  * 
  * Displays a favorited episode with its details and allows removal from favorites.
+ * Also includes a play button to start playback.
  * 
  * @param {Object} props
  * @param {Object} props.favorite - The favorite episode object
@@ -15,6 +17,7 @@ import styles from "./FavoriteEpisodeCard.module.css";
  */
 export default function FavoriteEpisodeCard({ favorite }) {
   const { removeFavorite } = useContext(FavoritesContext);
+  const { playEpisode, currentEpisode } = useContext(AudioContext);
   const navigate = useNavigate();
 
   const handleNavigateToPodcast = () => {
@@ -25,6 +28,16 @@ export default function FavoriteEpisodeCard({ favorite }) {
     e.stopPropagation();
     removeFavorite(favorite.id);
   };
+
+  const handlePlay = (e) => {
+    e.stopPropagation();
+    playEpisode(favorite);
+  };
+
+  const isCurrentlyPlaying = 
+    currentEpisode?.podcastId === favorite.podcastId &&
+    currentEpisode?.seasonNumber === favorite.seasonNumber &&
+    currentEpisode?.episodeNumber === favorite.episodeNumber;
 
   return (
     <div className={styles.card}>
@@ -40,13 +53,22 @@ export default function FavoriteEpisodeCard({ favorite }) {
           <h3 className={styles.episodeTitle} onClick={handleNavigateToPodcast}>
             {favorite.episodeTitle}
           </h3>
-          <button 
-            className={styles.removeButton}
-            onClick={handleRemove}
-            aria-label="Remove from favorites"
-          >
-            ❤️
-          </button>
+          <div className={styles.actions}>
+            <button
+              className={`${styles.playButton} ${isCurrentlyPlaying ? styles.playing : ''}`}
+              onClick={handlePlay}
+              aria-label="Play episode"
+            >
+              {isCurrentlyPlaying ? '⏸' : '▶'}
+            </button>
+            <button 
+              className={styles.removeButton}
+              onClick={handleRemove}
+              aria-label="Remove from favorites"
+            >
+              ❤️
+            </button>
+          </div>
         </div>
         
         <p className={styles.podcastTitle} onClick={handleNavigateToPodcast}>

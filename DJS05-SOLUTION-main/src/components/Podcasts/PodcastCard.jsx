@@ -1,11 +1,14 @@
+import { useContext } from "react";
 import { formatDate } from "../../utils/formatDate";
 import { useNavigate } from "react-router-dom";
+import { FavoritesContext } from "../../context/FavoritesContext";
 import styles from "./PodcastCard.module.css";
 import GenreTags from "../UI/GenreTags";
 
 /**
  * Renders a single podcast preview card with image, title, number of seasons,
  * genres (as styled tags), and the last updated date.
+ * Shows a heart indicator if any episodes from this podcast are favorited.
  *
  * @param {Object} props
  * @param {Object} props.podcast - The podcast data object to display.
@@ -20,14 +23,23 @@ import GenreTags from "../UI/GenreTags";
  */
 export default function PodcastCard({ podcast }) {
   const navigate = useNavigate();
+  const { favorites } = useContext(FavoritesContext);
 
   const handleNavigate = (preview) => {
     navigate(`/show/${preview.id}`, { state: { genres: preview.genres } });
   };
 
+  // Check if this podcast has any favorited episodes
+  const hasFavorites = favorites.some(fav => fav.podcastId === podcast.id);
+
   return (
     <div className={styles.card} onClick={() => handleNavigate(podcast)}>
-      <img src={podcast.image} alt={podcast.title} />
+      <div className={styles.imageContainer}>
+        <img src={podcast.image} alt={podcast.title} />
+        {hasFavorites && (
+          <span className={styles.favoriteIndicator}>❤️</span>
+        )}
+      </div>
 
       <h3>{podcast.title}</h3>
       <p className={styles.seasons}>{podcast.seasons} seasons</p>

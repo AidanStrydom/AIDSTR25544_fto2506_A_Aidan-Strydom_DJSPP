@@ -36,11 +36,18 @@
   gap: 1rem;
 }
 
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 .episodeTitle {
   margin: 0;
   font-size: 1.1rem;
   cursor: pointer;
   color: var(--text-primary);
+  flex: 1;
 }
 
 .episodeTitle:hover {
@@ -81,6 +88,30 @@
   font-size: 0.8rem;
   color: var(--text-tertiary);
   margin-top: auto;
+}
+
+.playButton {
+  background: #667eea;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 35px;
+}
+
+.playButton:hover {
+  background: #5568d3;
+  transform: scale(1.05);
+}
+
+.playButton.playing {
+  background: #ff6b6b;
 }
 
 .removeButton {
