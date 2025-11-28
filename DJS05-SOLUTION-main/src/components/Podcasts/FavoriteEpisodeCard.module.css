@@ -1,0 +1,113 @@
+.card {
+  display: flex;
+  gap: 1rem;
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-hover);
+}
+
+.image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.episodeTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+
+.episodeTitle:hover {
+  color: #667eea;
+}
+
+.podcastTitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.podcastTitle:hover {
+  color: #667eea;
+}
+
+.seasonInfo {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addedDate {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  margin-top: auto;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.removeButton:hover {
+  transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .description {
+    -webkit-line-clamp: 2;
+  }
+}
