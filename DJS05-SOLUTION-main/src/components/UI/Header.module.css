@@ -1,12 +1,75 @@
 .appHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  background: white;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
-.appHeader a {
+.appHeader h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.appHeader h1 a {
+  color: white;
   text-decoration: none;
-  color: black;
+}
+
+.appHeader h1 a:hover {
+  opacity: 0.9;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.favoritesLink {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.favoritesLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+  background: #ff4757;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .appHeader {
+    padding: 1rem;
+  }
+
+  .appHeader h1 {
+    font-size: 1.2rem;
+  }
+
+  .nav {
+    gap: 0.5rem;
+  }
+
+  .favoritesLink {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
