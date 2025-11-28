@@ -7,6 +7,7 @@ import {
   Loading,
   Error,
 } from "../components";
+import RecommendedShows from "../components/UI/RecommendedShows";
 import styles from "./Home.module.css";
 import { genres } from "../data";
 import { PodcastContext } from "../context/PodcastContext";
@@ -16,6 +17,7 @@ import { useContext } from "react";
  * Home page of the Podcast Explorer app.
  *
  * - Displays the main podcast browsing interface.
+ * - Shows recommended podcasts based on user favorites or genre diversity.
  * - Includes search, genre filter, and sort controls.
  * - Shows a loading indicator or error message based on fetch state.
  * - Renders the podcast grid and pagination once data is loaded.
@@ -30,12 +32,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <section className={styles.controls}>
-        <SearchBar />
-        <GenreFilter genres={genres} />
-        <SortSelect />
-      </section>
-
       {loading && <Loading message="Loading podcasts..." />}
       {error && (
         <Error message={`Error occurred while fetching podcasts: ${error}`} />
@@ -43,6 +39,14 @@ export default function Home() {
 
       {!loading && !error && (
         <>
+          <RecommendedShows />
+          
+          <section className={styles.controls}>
+            <SearchBar />
+            <GenreFilter genres={genres} />
+            <SortSelect />
+          </section>
+
           <PodcastGrid />
           <Pagination />
         </>
