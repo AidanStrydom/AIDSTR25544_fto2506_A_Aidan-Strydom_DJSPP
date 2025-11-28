@@ -1,6 +1,6 @@
-# DJS05 – React Podcast App with Routing, Detail Pages, and Context State
+# DJSPP – React Podcast App with Routing, Detail Pages, Context State, Media Player and UI Enhancment 
 
-This project is a **React-based podcast explorer** that builds upon DJS04 by adding **multi-page routing**, **podcast detail views**, and further improving the use of shared context state and component organization.
+This project is a **React-based podcast explorer** that builds upon DJS05 by adding **media player**, **favourites page**, **recommended section** and **theme toggle** and further improving the use of shared context state and component organization.
 
 ## Key Features
 
@@ -43,6 +43,22 @@ This project is a **React-based podcast explorer** that builds upon DJS04 by add
   - Fetches full podcast data when visiting `/show/:id`
   - Displays title, image, description, genre tags, and seasons
 
+- **Recommended Section**
+  - Displays podcasts with the widest array of genres if there are no favourites
+  - Displays podcasts with the same genres as favorited podcast episodes
+  - Has pagination for ease of use
+
+- **Favorites**
+  - Can click to favorite any number of episodes
+  - Seperate favoites page with full navigation
+
+- **Theme Toggle**
+  - Can switch between light and dark themes based on the users preferences
+
+- **media Player**
+  - Allows the user to listen to any podcast with the placeholder API
+  - Allows for pausing, playing, fastforwarding and rewinding      
+
 ## Project Structure
 
 ```
@@ -53,15 +69,15 @@ This project is a **React-based podcast explorer** that builds upon DJS04 by add
 │
 ├── /components
 │ ├── Filters/ # SearchBar, SortSelect, GenreFilter
-│ ├── Podcasts/ # PodcastCard, PodcastGrid, PodcastDetail
-│ └── UI/ # Header, Pagination, Loading, Error, GenreTags
+│ ├── Podcasts/ # PodcastCard, PodcastGrid, PodcastDetail, FavoriteEpisodeCard
+│ └── UI/ # Header, Pagination, Loading, Error, GenreTags, AudioPlayer, RecommendedShows
 │
 ├── /context
-│ └── PodcastContext.jsx # Context provider for global state
+│ └── PodcastContext.jsx # Context provider for global state, AudioContext, FavoritesContext, ThemeContext
 |
 ├── /pages
 │ ├── Home.jsx # Home page with all podcasts and controls
-│ └── ShowDetail.jsx # Detail view for a selected podcast
+│ └── ShowDetail.jsx # Detail view for a selected podcast, Favorites.jsx
 │
 ├── /styles
 │ └── \*.module.css # CSS Modules used throughout
