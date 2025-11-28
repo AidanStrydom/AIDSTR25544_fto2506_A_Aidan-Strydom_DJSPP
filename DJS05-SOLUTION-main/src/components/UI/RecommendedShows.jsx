@@ -10,7 +10,7 @@ import styles from "./RecommendedShows.module.css";
  * Displays recommended podcasts based on:
  * - Genres from favorited episodes (if user has favorites)
  * - Podcasts with most genres (if user has no favorites)
- * Includes pagination to prevent wrapping.
+ * Shows one row at a time with pagination.
  * 
  * @returns {JSX.Element} A section showing recommended podcasts
  */
@@ -90,8 +90,8 @@ export default function RecommendedShows() {
 
   if (recommendations.length === 0) return null;
 
-  // Calculate items per page (2 rows)
-  const itemsPerPage = itemsPerRow * 2;
+  // Calculate items per page (1 row only)
+  const itemsPerPage = itemsPerRow;
   const totalPages = Math.max(1, Math.ceil(recommendations.length / itemsPerPage));
   const currentPage = Math.min(page, totalPages);
   const paged = recommendations.slice(
